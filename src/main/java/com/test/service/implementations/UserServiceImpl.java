@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) throws NotFoundException {
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.getById(id);
         if (user == null) {
             throw new NotFoundException("User is not found");
         }
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
-        User user1 = userRepository.findByEmail(user.getEmail());
+        User user1 = userRepository.getByEmail(user.getEmail());
         if (user1 != null) {
             throw new DuplicateException("Duplicated user data");
         }
@@ -54,5 +54,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteById(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 }
