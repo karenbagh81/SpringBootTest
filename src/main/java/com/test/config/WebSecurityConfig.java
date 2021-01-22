@@ -4,6 +4,7 @@ import com.test.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,5 +46,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll()
                 .and()
                 .httpBasic();
+
+        /*web
+                .httpFirewall(defaultHttpFirewall())
+                //  .httpFirewall(allowUrlEncodedSlashHttpFirewall())
+                .ignoring()
+                .antMatchers(HttpMethod.GET, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.PATCH, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.POST, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.PUT, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.DELETE, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.GET, "/swagger-ui.html/**", "/webjars/**", "/swagger-resources/**", "/v2/api-docs");*/
     }
 }
